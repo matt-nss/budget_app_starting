@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>357935783557-oh15arfgp9ls3bp7ufv0m954r1igevdt.apps.googleusercontent.com</string>
+	<string>650570498112-dugrokcpmtc92na74qufod5u32rb36fb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.357935783557-oh15arfgp9ls3bp7ufv0m954r1igevdt</string>
+	<string>com.googleusercontent.apps.650570498112-dugrokcpmtc92na74qufod5u32rb36fb</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>650570498112-g43rni246k7adn3usipe2gr95gclgr6p.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDMMHJsNTy0Xqi-dDY7bHZ9YXRUPO9ccCI</string>
+	<string>AIzaSyD-SuX1FeqpE20bqfnH0FDAse-t0tOnBHo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>357935783557</string>
+	<string>650570498112</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.codingliquids.budgetAppStarting</string>
 	<key>PROJECT_ID</key>
-	<string>budget-app-89e2f</string>
+	<string>budget-app-b8d08</string>
 	<key>STORAGE_BUCKET</key>
-	<string>budget-app-89e2f.appspot.com</string>
+	<string>budget-app-b8d08.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:357935783557:ios:c30df50b09ca6b1c7ed3ec</string>
+	<string>1:650570498112:ios:1fb8919f87297ad46f1fa5</string>
 </dict>
 </plist>

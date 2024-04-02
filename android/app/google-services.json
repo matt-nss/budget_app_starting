@@ -1,34 +1,49 @@
 {
   "project_info": {
-    "project_number": "357935783557",
-    "project_id": "budget-app-89e2f",
-    "storage_bucket": "budget-app-89e2f.appspot.com"
+    "project_number": "650570498112",
+    "project_id": "budget-app-b8d08",
+    "storage_bucket": "budget-app-b8d08.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:357935783557:android:bb3a47cf604a791b7ed3ec",
+        "mobilesdk_app_id": "1:650570498112:android:a5c1bfbbd0d710146f1fa5",
         "android_client_info": {
           "package_name": "com.codingliquids.budget_app_starting"
         }
       },
       "oauth_client": [
         {
-          "client_id": "357935783557-1376sq2pftj6slgsqen29sk4udvt4pt5.apps.googleusercontent.com",
+          "client_id": "650570498112-g43rni246k7adn3usipe2gr95gclgr6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codingliquids.budget_app_starting",
+            "certificate_hash": "1ac17757c78ded3636f23e681feac2899757585a"
+          }
+        },
+        {
+          "client_id": "650570498112-3ao007r51p47ss53197ibbl1em4qp4gg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHWyC55ovaveulxwQDNBNggQhCskNE-oo"
+          "current_key": "AIzaSyCDameHutgtUgE7PgUaQ_Tqr_VmVbk9jNc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "357935783557-1376sq2pftj6slgsqen29sk4udvt4pt5.apps.googleusercontent.com",
+              "client_id": "650570498112-3ao007r51p47ss53197ibbl1em4qp4gg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "650570498112-dugrokcpmtc92na74qufod5u32rb36fb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codingliquids.budgetAppStarting"
+              }
             }
           ]
         }
