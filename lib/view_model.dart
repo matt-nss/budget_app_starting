@@ -40,6 +40,11 @@ class ViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Logout
+  Future<void> logout() async {
+    await _auth.signOut();
+  }
+
   //Authentication
   Future<void> createUserWithEmailAndPassword(
       BuildContext context, String email, String password) async {
