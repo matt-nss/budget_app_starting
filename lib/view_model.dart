@@ -139,6 +139,7 @@ class ViewModel extends ChangeNotifier {
                 containerWidth: 100.0,
                 hintText: "Amount",
                 controller: controllerAmount,
+                digitsOnly: true,
                 validator: (text) {
                   if (text.toString().isEmpty) {
                     return "Required";
@@ -167,7 +168,7 @@ class ViewModel extends ChangeNotifier {
                     .collection('expenses')
                     .add({
                   "name": controllerName.text,
-                  "Amount": controllerAmount.text
+                  "amount": controllerAmount.text
                 }).onError((error, stackTrace) {
                   logger.d("add expense error = $error");
                   return DialogBox(context, error.toString());
@@ -179,5 +180,140 @@ class ViewModel extends ChangeNotifier {
         ],
       ),
     );
+  }
+
+  Future addIncome(BuildContext context) async {
+    final formKey = GlobalKey<FormState>();
+    TextEditingController controllerName = TextEditingController();
+    TextEditingController controllerAmount = TextEditingController();
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              actionsAlignment: MainAxisAlignment.center,
+              contentPadding: EdgeInsets.all(32.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                side: BorderSide(width: 1.0, color: Colors.black),
+              ),
+              title: Form(
+                key: formKey,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextForm(
+                      text: "Name",
+                      containerWidth: 130.0,
+                      hintText: "Name",
+                      controller: controllerName,
+                      validator: (text) {
+                        if (text.toString().isEmpty) {
+                          return "Required";
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    TextForm(
+                      text: "Amount",
+                      containerWidth: 100.0,
+                      hintText: "Amount",
+                      controller: controllerAmount,
+                      digitsOnly: true,
+                      validator: (text) {
+                        if (text.toString().isEmpty) {
+                          return "Required";
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      await userCollection
+                          .doc(_auth.currentUser!.uid)
+                          .collection("incomes")
+                          .add({
+                        "name": controllerName.text,
+                        "amount": controllerAmount.text
+                      }).then((value) {
+                        logger.d("Income added");
+                      }).onError((error, stackTrace) {
+                        logger.d("add income error = $error");
+                        return DialogBox(context, error.toString());
+                      });
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: OpenSans(
+                    text: "Save",
+                    size: 15.0,
+                    color: Colors.white,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  color: Colors.black,
+                  splashColor: Colors.grey,
+                )
+              ],
+            ));
+  }
+
+  void expensesStream() async {
+    await for (var snapshot in userCollection
+        .doc(_auth.currentUser!.uid)
+        .collection("expenses")
+        .snapshots()) {
+      expensesAmount = [];
+      expensesName = [];
+      for (var expense in snapshot.docs) {
+        expensesName.add(expense.data()['name']);
+        expensesAmount.add(expense.data()['amount']);
+        notifyListeners();
+      }
+    }
+    ;
+  }
+
+  void incomesStream() async {
+    await for (var snapshot in userCollection
+        .doc(_auth.currentUser!.uid)
+        .collection('incomes')
+        .snapshots()) {
+      incomesAmount = [];
+      incomesName = [];
+
+      for (var incomes in snapshot.docs) {
+        incomesName.add(incomes.data()['name']);
+        incomesAmount.add(incomes.data()['amount']);
+        notifyListeners();
+      }
+    }
+  }
+
+  Future<void> reset() async {
+    await userCollection
+        .doc(_auth.currentUser!.uid)
+        .collection("expenses")
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+    });
+
+    await userCollection
+        .doc(_auth.currentUser!.uid)
+        .collection("incomes")
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+    });
   }
 }
