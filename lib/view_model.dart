@@ -101,4 +101,83 @@ class ViewModel extends ChangeNotifier {
       DialogBox(context, error.toString().replaceAll(RegExp('\\[.*?\\]'), ''));
     });
   }
+
+  //Database
+  Future addExpense(BuildContext context) async {
+    final formKey = GlobalKey<FormState>();
+    TextEditingController controllerName = TextEditingController();
+    TextEditingController controllerAmount = TextEditingController();
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        actionsAlignment: MainAxisAlignment.center,
+        contentPadding: EdgeInsets.all(32.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        title: Form(
+          key: formKey,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextForm(
+                text: "Name",
+                containerWidth: 130.0,
+                hintText: "Name",
+                controller: controllerName,
+                validator: (text) {
+                  if (text.toString().isEmpty) {
+                    return "Required";
+                  }
+                },
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              TextForm(
+                text: "Amount",
+                containerWidth: 100.0,
+                hintText: "Amount",
+                controller: controllerAmount,
+                validator: (text) {
+                  if (text.toString().isEmpty) {
+                    return "Required";
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          MaterialButton(
+            child: OpenSans(
+              text: "Save",
+              size: 15.0,
+              color: Colors.white,
+            ),
+            splashColor: Colors.grey,
+            color: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            onPressed: () async {
+              if (formKey.currentState!.validate()) {
+                await userCollection
+                    .doc(_auth.currentUser!.uid)
+                    .collection('expenses')
+                    .add({
+                  "name": controllerName.text,
+                  "Amount": controllerAmount.text
+                }).onError((error, stackTrace) {
+                  logger.d("add expense error = $error");
+                  return DialogBox(context, error.toString());
+                });
+                Navigator.pop(context);
+              }
+            },
+          )
+        ],
+      ),
+    );
+  }
 }
