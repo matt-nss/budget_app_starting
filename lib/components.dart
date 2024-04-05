@@ -117,6 +117,46 @@ class TextForm extends StatelessWidget {
   }
 }
 
+class TextEntry extends StatelessWidget {
+  final width;
+  final controller;
+  final keyboardType;
+  final hintText;
+  final prefixIcon;
+  final obscureText;
+  const TextEntry(
+      {super.key,
+      @required this.width,
+      @required this.controller,
+      this.keyboardType,
+      this.hintText,
+      this.prefixIcon,
+      this.obscureText});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      child: TextFormField(
+        keyboardType: keyboardType != null ? keyboardType : TextInputType.text,
+        textAlign: TextAlign.center,
+        controller: controller,
+        obscureText: obscureText == true ? obscureText : false,
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          prefixIcon: prefixIcon,
+          hintText: hintText,
+          hintStyle: GoogleFonts.openSans(),
+        ),
+      ),
+    );
+  }
+}
+
 DialogBox(BuildContext context, String title) {
   return showDialog(
       context: context,

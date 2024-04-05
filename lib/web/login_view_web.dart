@@ -1,6 +1,7 @@
 import 'package:budget_app_starting/view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,61 +43,38 @@ class LoginViewWeb extends HookConsumerWidget {
                   SizedBox(
                     height: 40.0,
                   ),
-                  SizedBox(
+                  TextEntry(
                     width: 350.0,
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      textAlign: TextAlign.center,
-                      controller: _emailField,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
-                        prefixIcon: Icon(
-                          Icons.email,
-                          color: Colors.black,
-                          size: 30.0,
-                        ),
-                        hintText: "Email",
-                        hintStyle: GoogleFonts.openSans(),
-                      ),
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailField,
+                    hintText: "Email",
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.black,
+                      size: 30.0,
                     ),
                   ),
+
                   SizedBox(
                     height: 20,
                   ),
                   //Password
-                  SizedBox(
+                  TextEntry(
                     width: 350.0,
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      controller: _passwordField,
-                      obscureText: viewModelProvider.isObscure,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
-                        prefixIcon: IconButton(
-                          icon: Icon(
-                              viewModelProvider.isObscure
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.black,
-                              size: 30.0),
-                          onPressed: () {
-                            viewModelProvider.toggleObscure();
-                          },
-                        ),
-                        hintText: "Password",
-                        hintStyle: GoogleFonts.openSans(),
-                      ),
+                    controller: _passwordField,
+                    hintText: "Password",
+                    prefixIcon: IconButton(
+                      icon: Icon(
+                          viewModelProvider.isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.black,
+                          size: 30.0),
+                      onPressed: () {
+                        viewModelProvider.toggleObscure();
+                      },
                     ),
+                    obscureText: viewModelProvider.isObscure,
                   ),
                   SizedBox(
                     height: 30.0,

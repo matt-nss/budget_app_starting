@@ -31,64 +31,92 @@ class LoginViewMobile extends HookConsumerWidget {
             SizedBox(
               height: 30.0,
             ),
-            SizedBox(
+            TextEntry(
               width: 350.0,
-              child: TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
-                controller: _emailField,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Colors.black,
-                      size: 30.0,
-                    ),
-                    hintText: "Email",
-                    hintStyle: GoogleFonts.openSans()),
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailField,
+              hintText: "Email",
+              prefixIcon: Icon(
+                Icons.email,
+                color: Colors.black,
+                size: 30.0,
               ),
             ),
+            // SizedBox(
+            //   width: 350.0,
+            //   child: TextFormField(
+            //     keyboardType: TextInputType.emailAddress,
+            //     textAlign: TextAlign.center,
+            //     controller: _emailField,
+            //     decoration: InputDecoration(
+            //         enabledBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            //         ),
+            //         focusedErrorBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            //         ),
+            //         prefixIcon: Icon(
+            //           Icons.email,
+            //           color: Colors.black,
+            //           size: 30.0,
+            //         ),
+            //         hintText: "Email",
+            //         hintStyle: GoogleFonts.openSans()),
+            //   ),
+            // ),
             SizedBox(height: 20.0),
             //Password field
-            SizedBox(
+            TextEntry(
               width: 350.0,
-              child: TextFormField(
-                textAlign: TextAlign.center,
-                controller: _passwordField,
-                obscureText: viewModelProvider.isObscure,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
-                    ),
-                  ),
-                  prefixIcon: IconButton(
-                    icon: Icon(
-                      viewModelProvider.isObscure
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Colors.black,
-                      size: 30.0,
-                    ),
-                    onPressed: () {
-                      viewModelProvider.toggleObscure();
-                    },
-                  ),
-                  hintStyle: GoogleFonts.openSans(),
-                  hintText: "Password",
-                ),
+              controller: _passwordField,
+              hintText: "Password",
+              prefixIcon: IconButton(
+                icon: Icon(
+                    viewModelProvider.isObscure
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Colors.black,
+                    size: 30.0),
+                onPressed: () {
+                  viewModelProvider.toggleObscure();
+                },
               ),
+              obscureText: viewModelProvider.isObscure,
             ),
+            // SizedBox(
+            //   width: 350.0,
+            //   child: TextFormField(
+            //     textAlign: TextAlign.center,
+            //     controller: _passwordField,
+            //     obscureText: viewModelProvider.isObscure,
+            //     decoration: InputDecoration(
+            //       enabledBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.all(
+            //           Radius.circular(10.0),
+            //         ),
+            //       ),
+            //       focusedBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.all(
+            //           Radius.circular(10.0),
+            //         ),
+            //       ),
+            //       prefixIcon: IconButton(
+            //         icon: Icon(
+            //           viewModelProvider.isObscure
+            //               ? Icons.visibility
+            //               : Icons.visibility_off,
+            //           color: Colors.black,
+            //           size: 30.0,
+            //         ),
+            //         onPressed: () {
+            //           viewModelProvider.toggleObscure();
+            //         },
+            //       ),
+            //       hintStyle: GoogleFonts.openSans(),
+            //       hintText: "Password",
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 30.0,
             ),
