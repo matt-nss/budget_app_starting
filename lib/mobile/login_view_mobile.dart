@@ -10,8 +10,6 @@ import 'package:sign_button/sign_button.dart';
 class LoginViewMobile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController _emailField = useTextEditingController();
-    TextEditingController _passwordField = useTextEditingController();
     final viewModelProvider = ref.watch(viewModel);
     final double deviceHeight = MediaQuery.of(context).size.height;
     return SafeArea(
@@ -31,173 +29,16 @@ class LoginViewMobile extends HookConsumerWidget {
             SizedBox(
               height: 30.0,
             ),
-            TextEntry(
-              width: 350.0,
-              keyboardType: TextInputType.emailAddress,
-              controller: _emailField,
-              hintText: "Email",
-              prefixIcon: Icon(
-                Icons.email,
-                color: Colors.black,
-                size: 30.0,
-              ),
-            ),
-            // SizedBox(
-            //   width: 350.0,
-            //   child: TextFormField(
-            //     keyboardType: TextInputType.emailAddress,
-            //     textAlign: TextAlign.center,
-            //     controller: _emailField,
-            //     decoration: InputDecoration(
-            //         enabledBorder: OutlineInputBorder(
-            //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            //         ),
-            //         focusedErrorBorder: OutlineInputBorder(
-            //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            //         ),
-            //         prefixIcon: Icon(
-            //           Icons.email,
-            //           color: Colors.black,
-            //           size: 30.0,
-            //         ),
-            //         hintText: "Email",
-            //         hintStyle: GoogleFonts.openSans()),
-            //   ),
-            // ),
-            SizedBox(height: 20.0),
-            //Password field
-            TextEntry(
-              width: 350.0,
-              controller: _passwordField,
-              hintText: "Password",
-              prefixIcon: IconButton(
-                icon: Icon(
-                    viewModelProvider.isObscure
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: Colors.black,
-                    size: 30.0),
-                onPressed: () {
-                  viewModelProvider.toggleObscure();
-                },
-              ),
-              obscureText: viewModelProvider.isObscure,
-            ),
-            // SizedBox(
-            //   width: 350.0,
-            //   child: TextFormField(
-            //     textAlign: TextAlign.center,
-            //     controller: _passwordField,
-            //     obscureText: viewModelProvider.isObscure,
-            //     decoration: InputDecoration(
-            //       enabledBorder: OutlineInputBorder(
-            //         borderRadius: BorderRadius.all(
-            //           Radius.circular(10.0),
-            //         ),
-            //       ),
-            //       focusedBorder: OutlineInputBorder(
-            //         borderRadius: BorderRadius.all(
-            //           Radius.circular(10.0),
-            //         ),
-            //       ),
-            //       prefixIcon: IconButton(
-            //         icon: Icon(
-            //           viewModelProvider.isObscure
-            //               ? Icons.visibility
-            //               : Icons.visibility_off,
-            //           color: Colors.black,
-            //           size: 30.0,
-            //         ),
-            //         onPressed: () {
-            //           viewModelProvider.toggleObscure();
-            //         },
-            //       ),
-            //       hintStyle: GoogleFonts.openSans(),
-            //       hintText: "Password",
-            //     ),
-            //   ),
-            // ),
+            EmailAndPasswordFields(),
             SizedBox(
               height: 30.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //Register buton
-                SizedBox(
-                  height: 50.0,
-                  width: 150.0,
-                  child: MaterialButton(
-                    onPressed: () async {
-                      await viewModelProvider.createUserWithEmailAndPassword(
-                          context, _emailField.text, _passwordField.text);
-                    },
-                    child: OpenSans(
-                      text: "Register",
-                      size: 25.0,
-                      color: Colors.white,
-                    ),
-                    splashColor: Colors.grey,
-                    color: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Text(
-                  "Or",
-                  style:
-                      GoogleFonts.pacifico(color: Colors.black, fontSize: 15.0),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                // Login Button
-                SizedBox(
-                  height: 50.0,
-                  width: 150.0,
-                  child: MaterialButton(
-                    child: OpenSans(
-                      text: "Login",
-                      size: 25.0,
-                      color: Colors.white,
-                    ),
-                    splashColor: Colors.grey,
-                    color: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    onPressed: () async {
-                      await viewModelProvider.signInWithEmailAndPassword(
-                          context, _emailField.text, _passwordField.text);
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-              ],
-            ),
+            RegisterAndLogin(),
             SizedBox(
               height: 30.0,
             ),
             // Google signIn button
-            SignInButton(
-              buttonType: ButtonType.google,
-              btnColor: Colors.black,
-              btnTextColor: Colors.white,
-              buttonSize: ButtonSize.medium,
-              onPressed: () async {
-                if (kIsWeb) {
-                  await viewModelProvider.signInWithGoogleWeb(context);
-                } else {
-                  await viewModelProvider.signInWithGoogleMobile(context);
-                }
-              },
-            ),
+            GoogleSignInButton()
           ],
         ),
       ),

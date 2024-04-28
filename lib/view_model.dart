@@ -1,4 +1,5 @@
 import 'package:budget_app_starting/components.dart';
+import 'package:budget_app_starting/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -21,10 +22,11 @@ class ViewModel extends ChangeNotifier {
   bool isObscure = true;
   var logger = Logger();
 
-  List expensesName = [];
-  List expensesAmount = [];
-  List incomesName = [];
-  List incomesAmount = [];
+  List<Models> expenses = [];
+  List<Models> incomes = [];
+  int totalExpense = 0;
+  int totalIncome = 0;
+  int budgetLeft = 0;
 
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
@@ -42,6 +44,19 @@ class ViewModel extends ChangeNotifier {
 
   toggleObscure() {
     isObscure = !isObscure;
+    notifyListeners();
+  }
+
+  void calculate() {
+    totalExpense = 0;
+    totalIncome = 0;
+    for (int i = 0; i < expenses.length; i++) {
+      totalExpense = totalExpense + int.parse(expenses[i].amount);
+    }
+    for (int i = 0; i < incomes.length; i++) {
+      totalIncome = totalIncome + int.parse(incomes[i].amount);
+    }
+    budgetLeft = totalIncome - totalExpense;
     notifyListeners();
   }
 
@@ -273,13 +288,20 @@ class ViewModel extends ChangeNotifier {
         .doc(_auth.currentUser!.uid)
         .collection("expenses")
         .snapshots()) {
-      expensesAmount = [];
-      expensesName = [];
-      for (var expense in snapshot.docs) {
-        expensesName.add(expense.data()['name']);
-        expensesAmount.add(expense.data()['amount']);
-        notifyListeners();
-      }
+      expenses = [];
+      snapshot.docs.forEach((element) {
+        expenses.add(Models.fromJson(element.data()));
+      });
+      logger.d("Expense Models ${expenses.length}");
+      notifyListeners();
+      // expensesAmount = [];
+      // expensesName = [];
+      // for (var expense in snapshot.docs) {
+      //   expensesName.add(expense.data()['name']);
+      //   expensesAmount.add(expense.data()['amount']);
+      //   notifyListeners();
+      // }
+      calculate();
     }
     ;
   }
@@ -289,14 +311,20 @@ class ViewModel extends ChangeNotifier {
         .doc(_auth.currentUser!.uid)
         .collection('incomes')
         .snapshots()) {
-      incomesAmount = [];
-      incomesName = [];
-
-      for (var incomes in snapshot.docs) {
-        incomesName.add(incomes.data()['name']);
-        incomesAmount.add(incomes.data()['amount']);
-        notifyListeners();
-      }
+      incomes = [];
+      snapshot.docs.forEach((element) {
+        incomes.add(Models.fromJson(element.data()));
+      });
+      notifyListeners();
+      // incomesAmount = [];
+      // incomesName = [];
+      //
+      // for (var incomes in snapshot.docs) {
+      //   incomesName.add(incomes.data()['name']);
+      //   incomesAmount.add(incomes.data()['amount']);
+      //   notifyListeners();
+      // }
+      calculate();
     }
   }
 

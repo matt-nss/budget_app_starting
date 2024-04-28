@@ -21,91 +21,9 @@ class ExpenseViewWeb extends HookConsumerWidget {
       isLoading = false;
     }
 
-    int totalExpense = 0;
-    int totalIncome = 0;
-    void calculate() {
-      for (int i = 0; i < viewModelProvider.expensesAmount.length; i++) {
-        totalExpense =
-            totalExpense + int.parse(viewModelProvider.expensesAmount[i]);
-      }
-      for (int i = 0; i < viewModelProvider.incomesAmount.length; i++) {
-        totalIncome =
-            totalIncome + int.parse(viewModelProvider.incomesAmount[i]);
-      }
-    }
-
-    calculate();
-    int budgetLeft = totalIncome - totalExpense;
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DrawerHeader(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 1.0, color: Colors.black),
-                  ),
-                  child: CircleAvatar(
-                    radius: 180,
-                    backgroundColor: Colors.white,
-                    child: Image(
-                      height: 100.0,
-                      image: AssetImage('assets/logo.png'),
-                      filterQuality: FilterQuality.high,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              MaterialButton(
-                elevation: 20.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                height: 50.0,
-                minWidth: 200.0,
-                color: Colors.black,
-                child: OpenSans(
-                  text: "Logout",
-                  size: 20.0,
-                  color: Colors.white,
-                ),
-                onPressed: () async {
-                  await viewModelProvider.logout();
-                },
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.instagram.com/ardent_bjjguy/")),
-                    icon: SvgPicture.asset('assets/instagram.svg',
-                        color: Colors.black, width: 35.0),
-                  ),
-                  IconButton(
-                    onPressed: () async => await launchUrl(
-                        Uri.parse("https://www.twitter.com/tomcruise")),
-                    icon: SvgPicture.asset(
-                      'assets/twitter.svg',
-                      color: Colors.black,
-                      width: 35.0,
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
+        drawer: DrawerExpense(),
         appBar: AppBar(
           iconTheme: IconThemeData(
             color: Colors.white,
@@ -147,65 +65,12 @@ class ExpenseViewWeb extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Add expense
-                      SizedBox(
-                        height: 45.0,
-                        width: 160.0,
-                        child: MaterialButton(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                              OpenSans(
-                                text: "Add expense",
-                                size: 17.0,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                          onPressed: () async {
-                            await viewModelProvider.addExpense(context);
-                          },
-                          splashColor: Colors.grey,
-                          color: Colors.black,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                        ),
-                      ),
+                      AddExpense(),
                       SizedBox(
                         height: 30.0,
                       ),
                       // Add income
-                      SizedBox(
-                        height: 45.0,
-                        width: 160.0,
-                        child: MaterialButton(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                              OpenSans(
-                                text: "Add Income",
-                                size: 17.0,
-                                color: Colors.white,
-                              )
-                            ],
-                          ),
-                          onPressed: () async {
-                            await viewModelProvider.addIncome(context);
-                          },
-                          splashColor: Colors.grey,
-                          color: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
+                      AddIncome(),
                     ],
                   ),
                 ),
@@ -223,61 +88,7 @@ class ExpenseViewWeb extends HookConsumerWidget {
                       Radius.circular(25.0),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Poppins(
-                            text: "Budget left",
-                            size: 17.0,
-                            color: Colors.white,
-                          ),
-                          Poppins(
-                            text: "Total Expense",
-                            size: 17.0,
-                            color: Colors.white,
-                          ),
-                          Poppins(
-                            text: "Total income",
-                            size: 17.0,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                      RotatedBox(
-                        quarterTurns: 1,
-                        child: Divider(
-                          indent: 40.0,
-                          endIndent: 40.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Poppins(
-                            text: budgetLeft.toString(),
-                            size: 17.0,
-                            color: Colors.white,
-                          ),
-                          Poppins(
-                            text: totalExpense.toString(),
-                            size: 17.0,
-                            color: Colors.white,
-                          ),
-                          Poppins(
-                            text: totalIncome.toString(),
-                            size: 17.0,
-                            color: Colors.white,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                  child: TotalCalculation(17.0),
                 )
               ],
             ),
@@ -330,21 +141,21 @@ class ExpenseViewWeb extends HookConsumerWidget {
                           border: Border.all(width: 1.0, color: Colors.white),
                         ),
                         child: ListView.builder(
-                          itemCount: viewModelProvider.expensesAmount.length,
+                          itemCount: viewModelProvider.expenses.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Poppins(
-                                  text: viewModelProvider.expensesName[index],
+                                  text: viewModelProvider.expenses[index].name,
                                   size: 15.0,
                                   color: Colors.white,
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: Poppins(
-                                    text:
-                                        viewModelProvider.expensesAmount[index],
+                                    text: viewModelProvider
+                                        .expenses[index].amount,
                                     size: 15.0,
                                     color: Colors.white,
                                   ),
@@ -393,13 +204,13 @@ class ExpenseViewWeb extends HookConsumerWidget {
                             border:
                                 Border.all(width: 1.0, color: Colors.white)),
                         child: ListView.builder(
-                          itemCount: viewModelProvider.incomesAmount.length,
+                          itemCount: viewModelProvider.incomes.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Poppins(
-                                  text: viewModelProvider.incomesName[index],
+                                  text: viewModelProvider.incomes[index].name,
                                   size: 15.0,
                                   color: Colors.white,
                                 ),
@@ -407,7 +218,7 @@ class ExpenseViewWeb extends HookConsumerWidget {
                                   alignment: Alignment.centerRight,
                                   child: Poppins(
                                     text:
-                                        viewModelProvider.incomesAmount[index],
+                                        viewModelProvider.incomes[index].amount,
                                     size: 15.0,
                                     color: Colors.white,
                                   ),
